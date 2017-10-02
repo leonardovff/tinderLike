@@ -4,8 +4,8 @@ function run(time){
 	btn = document.querySelector('button[aria-label="Curti"]');
 	if(typeof interval != null)
 		clearInterval(interval);
-	interval = setInterval(() => {
-        qtd++;
+    interval = setInterval(() => {
+		qtd++;
         console.log(qtd);	
         btn.click()
     }, time);
