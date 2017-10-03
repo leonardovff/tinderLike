@@ -1,5 +1,7 @@
 var interval = null;
-
+const keywords = [
+	'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo'
+];
 function run(time){
 	var qtd = 0, 
 
@@ -25,10 +27,6 @@ function filter(){
 	openProfile.click();
 
 	const profileDescription = document.querySelector("div.profileCard__header__info");
-
-	const keywords = [
-		'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo'
-	];
 
 	return keywords.filter(word => {
 		return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
