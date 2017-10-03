@@ -1,7 +1,7 @@
 var interval = null;
 function run(time){
 	var qtd = 0, 
-	btn = document.querySelector('button[aria-label="Curti"]');
+	btn = document.querySelector('button.recsGamepad__button--like');
 	
 	if(typeof interval != null)
 		clearInterval(interval);
