@@ -1,7 +1,7 @@
 var interval = null;
 
 const KEYWORDS = [
-	'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo'
+	'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo', 'mapa astral', 'oral'
 ];
 
 function run(time, filterFlag){
