@@ -13,7 +13,7 @@ function run(time, filterFlag){
 	
 	interval = setInterval(() => {
 		isLike = (filter() && filterFlag);
-		selectorBtn = isLike? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like');
+		selectorBtn = isLike? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
 		btn = document.querySelector(selectorBtn);
 
 		qtd++;
