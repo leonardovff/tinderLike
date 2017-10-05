@@ -1,6 +1,6 @@
 var interval = null;
 const keywords = [
-	'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo'
+	'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo', 'mapa astral', 'oral'
 ];
 function run(time){
 	var qtd = 0, 
