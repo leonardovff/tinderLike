@@ -1,20 +1,25 @@
 var interval = null;
-const keywords = [
+
+const KEYWORDS = [
 	'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo'
 ];
-function run(time){
-	var qtd = 0, 
 
-	selectorBtn = (filter() ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like')
-	btn = document.querySelector(selectorBtn);
+function run(time, filterFlag){
+	let qtd = 0,
+	isLike; 
 	
 	if(typeof interval != null)
 		clearInterval(interval);
 	
 	interval = setInterval(() => {
+		isLike = (filter() && filterFlag);
+		selectorBtn = isLike? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like');
+		btn = document.querySelector(selectorBtn);
+
 		qtd++;
 		console.log(qtd);	
 		btn.click()
+
 	}, time);
 }
 
@@ -28,10 +33,10 @@ function filter(){
 
 	const profileDescription = document.querySelector("div.profileCard__header__info");
 
-	return keywords.filter(word => {
+	return KEYWORDS.filter(word => {
 		return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
 	}).length;
 }
 
 //time in milliseconds
-run(2000)
+run(2000, false)
