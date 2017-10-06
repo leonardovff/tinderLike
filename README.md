@@ -22,7 +22,7 @@ Run this application directly from your browser's console
 2. <kbd>CTRL</kbd>+<kbd>C</kbd>  <kbd>CTRL</kbd>+<kbd>V</kbd> code in console
 3. With function run - time in milliseconds
 
-    `run(200)`
+    `run(200, true/false)` - active or disable  filters
 
 ### Stop
     
