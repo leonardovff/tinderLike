@@ -13,28 +13,33 @@ function run(time, filterFlag, KEYWORDS){
 		isDislike = (filterFlag && filter(KEYWORDS) == 0);
 		selectorBtn = isDislike? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
 		btn = document.querySelector(selectorBtn);
-
-		qtd++;
-		console.log(qtd);
-		btn.click()
+		if(typeof btn !== null) {
+			qtd++;
+			console.log(qtd + 'likes');
+			btn.click()
+		}
 
 	}, time);
 }
 
 function stop(){
+	console.log('stopped!')
 	clearInterval(interval);
 }
 
-function filter(KEYWORDS){
+function filter(PROFILE, KEYWORDS){
 	const openProfile = document.querySelector('div.recCard__openProfile');
-	console.log('filtering')
-	openProfile.click();
+	if(openProfile !== null) {
+		openProfile.click();
 
-	const profileDescription = document.querySelector("div.profileCard__header__info");
+		const profileDescription = document.querySelector("div.profileCard__header__info");
 
-	return KEYWORDS.filter(word => {
-		return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
-	}).length;
+		return KEYWORDS.filter(word => {
+			return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
+		}).length;
+	}
+	stop();
+	return false;
 }
 
 //time in milliseconds
