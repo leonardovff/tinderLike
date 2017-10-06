@@ -6,14 +6,16 @@ const KEYWORDS = [
 
 function run(time, filterFlag){
 	let qtd = 0,
-	isLike; 
+	isDislike,
+	selectorBtn,
+	btn; 
 	
 	if(typeof interval != null)
 		clearInterval(interval);
 	
 	interval = setInterval(() => {
-		isLike = (filter() && filterFlag);
-		selectorBtn = isLike? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
+		isDislike = (filter() == 0 && filterFlag);
+		selectorBtn = isDislike? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
 		btn = document.querySelector(selectorBtn);
 
 		qtd++;
