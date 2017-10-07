@@ -15,11 +15,13 @@ function run(time, KEYWORDS = false){
 
 	interval = setInterval(() => {
 		isDislike = (filterFlag && filter(KEYWORDS) == 0);
-		selectorBtn = isDislike? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
+		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
 		btn = document.querySelector(selectorBtn);
 		if(typeof btn !== null) {
+			let cardName = document.querySelector("span.recCard__name").textContent;
+			let cardAge = document.querySelector("span.recCard__age ").textContent.split(', ')[1];
 			qtd++;
-			console.log(qtd + ' likes');
+			console.log("["+ qtd + "] " + (isDislike? 'Dislike' : 'Like') + ' at ' + cardName + " ("+ cardAge +")")
 			btn.click()
 		}
 
@@ -36,17 +38,17 @@ function filter(KEYWORDS){
 	if(openProfile)  {
 		openProfile.click();
 		const profileDescription = document.querySelector("div.profileCard__header__info");
-		return KEYWORDS.filter(word => {
-			console.log('word', word, 'profileDescription.textContent.toUpperCase()', profileDescription.textContent.toUpperCase())
+		const qtd = KEYWORDS.filter(word => {
 			return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
 		}).length;
+		document.querySelector('a.profileCard__backArrow').click()
+		return qtd
 	}
-	console.log((openProfile !== null), openProfile.click())
 	stop();
 	return false;
 }
 
 //time in milliseconds
-run(1000, [
+run(2000, [
 	'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo', 'mapa astral', 'oral'
 ])
