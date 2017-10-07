@@ -1,12 +1,16 @@
 var interval = null;
 
-function run(time, filterFlag, KEYWORDS){
+function run(time, KEYWORDS = false){
 	let qtd = 0,
 	isDislike,
 	selectorBtn,
-	btn;
+	btn,
+	filterFlag = false;
 
-	if(typeof interval != null)
+	if(Array.isArray(KEYWORDS))
+		filterFlag = true
+
+	if(typeof interval !== null)
 		clearInterval(interval);
 
 	interval = setInterval(() => {
@@ -15,7 +19,7 @@ function run(time, filterFlag, KEYWORDS){
 		btn = document.querySelector(selectorBtn);
 		if(typeof btn !== null) {
 			qtd++;
-			console.log(qtd + 'likes');
+			console.log(qtd + ' likes');
 			btn.click()
 		}
 
@@ -27,22 +31,22 @@ function stop(){
 	clearInterval(interval);
 }
 
-function filter(PROFILE, KEYWORDS){
+function filter(KEYWORDS){
 	const openProfile = document.querySelector('div.recCard__openProfile');
-	if(openProfile !== null) {
+	if(openProfile)  {
 		openProfile.click();
-
 		const profileDescription = document.querySelector("div.profileCard__header__info");
-
 		return KEYWORDS.filter(word => {
+			console.log('word', word, 'profileDescription.textContent.toUpperCase()', profileDescription.textContent.toUpperCase())
 			return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
 		}).length;
 	}
+	console.log((openProfile !== null), openProfile.click())
 	stop();
 	return false;
 }
 
 //time in milliseconds
-run(1000, true, [
+run(1000, [
 	'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo', 'mapa astral', 'oral'
 ])
