@@ -14,8 +14,7 @@ function run(time, KEYWORDS = false){
 		clearInterval(interval);
 
 	interval = setInterval(() => {
-		isDislike = (filterFlag && filter(KEYWORDS) > 0);
-		console.log(filterFlag, filter(KEYWORDS))
+		isDislike = (filterFlag && filter(KEYWORDS) > 0)
 		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
 		btn = document.querySelector(selectorBtn);
 		if(typeof btn !== null) {
