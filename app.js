@@ -37,7 +37,7 @@ function filter(KEYWORDS){
 	const openProfile = document.querySelector('div.recCard__openProfile');
 	if(openProfile)  {
 		openProfile.click();
-		const profileDescription = document.querySelector("div.profileCard__header__info");
+		const profileDescription = document.querySelector("div.profileCard__textContent");
 		const qtd = KEYWORDS.filter(word => {
 			return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
 		}).length;
