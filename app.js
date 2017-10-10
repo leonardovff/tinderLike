@@ -1,44 +1,74 @@
-var interval = null;
+var interval = null,
+	qtd = 0;
 
-const KEYWORDS = [
-	'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo', 'mapa astral', 'oral'
-];
-
-function run(time, filterFlag){
-	let qtd = 0,
-	isDislike,
-	selectorBtn,
-	btn; 
-	
-	if(typeof interval != null)
+function run(time = 300, KEYWORDS = false){
+	if(typeof interval !== null){
 		clearInterval(interval);
-	
-	interval = setInterval(() => {
-		isDislike = (filter() == 0 && filterFlag);
-		selectorBtn = isDislike? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
-		btn = document.querySelector(selectorBtn);
-
-		qtd++;
-		console.log(qtd);	
-		btn.click()
-
-	}, time);
+	}
+	interval = setInterval(action(KEYWORDS), time);
 }
 
+function action(KEYWORDS = false){
+	qtd += 1;
+
+	let isDislike = false,
+		selectorBtn,
+		btn,
+		cardActived,
+		filtered = false,
+		msg = "["+ qtd + "] ";
+
+	try {
+		cardActived = document.querySelector("div.recCard.needsclick.active");
+
+		filtered = filter(cardActived, KEYWORDS);
+		isDislike = (filtered.qtd > 0);
+		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
+		btn = document.querySelector(selectorBtn);
+
+		cardNameAge = cardActived.querySelector("div.recCard__nameAge").textContent.split(', ');
+		cardNameAge = {
+			"name": cardNameAge[0],
+			"age": cardNameAge[1]
+		}
+		msg += (isDislike? 'Dislike' : 'Like') + ' at ' + cardNameAge.name + " ("+ cardNameAge.age +")."
+		if(filtered){
+			msg += "\n\t- "+filtered.qtd + " Filtered words: " + filtered.words.join(', ');
+		}
+		btn.click()
+	} catch (e) {
+		msg = e
+	} finally {
+		console.log(msg)
+	}
+
+}
+
+function filter(cardActived, KEYWORDS){
+	try {
+		const click = cardActived.querySelector('div.recCard__openProfile').click();
+		const profileDescription = document.querySelector("div.profileCard__textContent");
+		const words = KEYWORDS.filter(word => {
+			return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
+		})
+		const close = document.querySelector('a.profileCard__backArrow').click()
+		return {
+			"qtd": words.length,
+			"words": words
+		}
+	} catch (e) {
+		console.log(e)
+		return false;
+	}
+}
+
+
 function stop(){
+	console.log('stopped!')
 	clearInterval(interval);
 }
 
-function filter(){
-	const openProfile = document.querySelector('div.recCard__openProfile');
-	openProfile.click();
-
-	const profileDescription = document.querySelector("div.profileCard__header__info");
-
-	return KEYWORDS.filter(word => {
-		return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
-	}).length;
-}
-
 //time in milliseconds
-run(2000, false)
+run(2000, [
+	'acompanhante', 'trans'
+])
