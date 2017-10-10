@@ -12,11 +12,9 @@ function run(time = 300, KEYWORDS = false){
 
 	interval = setInterval(() => {
 		let filtered = false;
-		console.log('filtered', filtered)
 		if(Array.isArray(KEYWORDS)){
 			filtered = filter(KEYWORDS);
 			isDislike = (filtered.qtd > 0)
-			console.log(filtered, isDislike)
 		}
 		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
 		btn = document.querySelector(selectorBtn);
