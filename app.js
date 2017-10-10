@@ -29,9 +29,9 @@ function run(time = 300, KEYWORDS = false){
 				let cardName = cardNameAge[0];
 				let cardAge = cardNameAge[1];
 				msg += (isDislike? 'Dislike' : 'Like') + ' at ' + cardName + " ("+ cardAge +")."
-				if(filtered && filtered.qtd && filtered.words){
+				if(filtered && filtered.qtd > 0 && filtered.words){
 					console.log(filtered)
-					msg += "\n\t- "+filtered.qtd + " Filtered words: " + filtered.words;
+					msg += "\n\t- "+filtered.qtd + " Filtered words: " + filtered.words.join(', ');
 				}
 				btn.click()
 			} else {
