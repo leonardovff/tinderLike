@@ -1,28 +1,43 @@
 var interval = null;
 
-function run(time, KEYWORDS = false){
+function run(time = 300, KEYWORDS = false){
 	let qtd = 0,
-	isDislike,
+	isDislike = false,
 	selectorBtn,
-	btn,
-	filterFlag = false;
+	btn;
 
-	if(Array.isArray(KEYWORDS))
-		filterFlag = true
-
-	if(typeof interval !== null)
+	if(typeof interval !== null){
 		clearInterval(interval);
+	}
 
 	interval = setInterval(() => {
-		isDislike = (filterFlag && filter(KEYWORDS) > 0)
+		let filtered = false;
+		console.log('filtered', filtered)
+		if(Array.isArray(KEYWORDS)){
+			filtered = filter(KEYWORDS);
+			isDislike = (filtered.qtd > 0)
+			console.log(filtered, isDislike)
+		}
 		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
 		btn = document.querySelector(selectorBtn);
 		if(typeof btn !== null) {
-			let cardName = document.querySelector("span.recCard__name").textContent;
-			let cardAge = document.querySelector("span.recCard__age ").textContent.split(', ')[1];
 			qtd++;
-			console.log("["+ qtd + "] " + (isDislike? 'Dislike' : 'Like') + ' at ' + cardName + " ("+ cardAge +")")
-			btn.click()
+			let cardNameAge = document.querySelector("div.recCard__nameAge")
+			let msg = "["+ qtd + "] ";
+			if(cardNameAge){
+				cardNameAge = cardNameAge.textContent.split(', ');
+				let cardName = cardNameAge[0];
+				let cardAge = cardNameAge[1];
+				msg += (isDislike? 'Dislike' : 'Like') + ' at ' + cardName + " ("+ cardAge +")."
+				if(filtered && filtered.qtd && filtered.words){
+					console.log(filtered)
+					msg += "\n\t- "+filtered.qtd + " Filtered words: " + filtered.words;
+				}
+				btn.click()
+			} else {
+				msg = 'No cards found.'
+			}
+			console.log(msg)
 		}
 
 	}, time);
@@ -35,20 +50,26 @@ function stop(){
 
 function filter(KEYWORDS){
 	const openProfile = document.querySelector('div.recCard__openProfile');
+	let filtered = false
 	if(openProfile)  {
+		filtered = {}
 		openProfile.click();
 		const profileDescription = document.querySelector("div.profileCard__textContent");
-		const qtd = KEYWORDS.filter(word => {
+		const words = KEYWORDS.filter(word => {
 			return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
-		}).length;
+		})
+		const qtd = words.length;
+		filtered.words = words;
+		filtered.qtd = qtd;
 		document.querySelector('a.profileCard__backArrow').click()
-		return qtd
+
+	} else {
+		stop();
 	}
-	stop();
-	return false;
+	return filtered;
 }
 
 //time in milliseconds
-run(2000, [
-	'acompanhante', 'trans', 'signo', 'escorpiana', 'tainara', 'ascendente', 'horoscopo', 'mapa astral', 'oral'
+run(5000, [
+	'acompanhante', 'trans'
 ])
