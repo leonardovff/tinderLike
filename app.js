@@ -70,6 +70,6 @@ function filter(KEYWORDS){
 }
 
 //time in milliseconds
-run(5000, [
+run(2000, [
 	'acompanhante', 'trans'
 ])
