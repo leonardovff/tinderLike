@@ -31,15 +31,20 @@ function action(KEYWORDS = false){
 			"name": cardNameAge[0],
 			"age": cardNameAge[1]
 		}
-		msg += (isDislike? 'Dislike' : 'Like') + ' at ' + cardNameAge.name + " ("+ cardNameAge.age +")."
+		msg += (isDislike? 'Dislike' : 'Like') + ' at ' + cardNameAge.name + " ("+ cardNameAge.age +"y).";
 		if(filtered){
-			msg += "\n\t- "+filtered.qtd + " Filtered words: " + filtered.words.join(', ');
+			if(filtered.details){
+				msg += "\n\t- "+filtered.details.join(' - ');
+			}
+			if(filtered.qtd > 0){
+				msg += "\n\t- "+filtered.qtd + " filtered words: " +"\n\t"+ filtered.words.join(', ');
+			}
 		}
-		btn.click()
+		btn.click();
 	} catch (e) {
-		msg = e
+		msg = e;
 	} finally {
-		console.log(msg)
+		console.log(msg);
 	}
 
 }
@@ -51,13 +56,19 @@ function filter(cardActived, KEYWORDS){
 		const words = KEYWORDS.filter(word => {
 			return profileDescription.textContent.toUpperCase().includes(word.toUpperCase());
 		})
+		let profileDetails = []
+		document.querySelectorAll('.profileCard__info').forEach(function(e) {
+			profileDetails.push(e.textContent)
+		}, this);
+		profileDetails[profileDetails.length - 1] = profileDetails[profileDetails.length - 1].split(" ")[0] + "km"
 		const close = document.querySelector('a.profileCard__backArrow').click()
 		return {
 			"qtd": words.length,
-			"words": words
+			"words": words,
+			"details": profileDetails
 		}
 	} catch (e) {
-		console.log(e)
+		console.log(e);
 		return false;
 	}
 }
