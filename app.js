@@ -5,7 +5,8 @@ function run(time = 300, KEYWORDS = false){
 	if(typeof interval !== null){
 		clearInterval(interval);
 	}
-	interval = setInterval(action(KEYWORDS), time);
+	var sKEYWORDS = KEYWORDS
+	interval = setInterval(() => action(sKEYWORDS), time);
 }
 
 function action(KEYWORDS = false){
@@ -80,6 +81,6 @@ function stop(){
 }
 
 //time in milliseconds
-run(2000, [
+run(300, [
 	'acompanhante', 'trans'
 ])
