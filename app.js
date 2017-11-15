@@ -22,6 +22,12 @@ function action(KEYWORDS = false){
 	try {
 		cardActived = document.querySelector("div.recCard.needsclick.active");
 
+		if( cardActived === null){
+			console.log( "sem cards" );
+			stop()
+			return;
+		}
+
 		filtered = filter(cardActived, KEYWORDS);
 		isDislike = (filtered.qtd > 0);
 		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
@@ -75,12 +81,11 @@ function filter(cardActived, KEYWORDS){
 }
 
 
+
 function stop(){
 	console.log('stopped!')
 	clearInterval(interval);
 }
 
 //time in milliseconds
-run(300, [
-	'acompanhante', 'trans'
-])
+run(1000, [ 'acompanhante', 'trans' ])
