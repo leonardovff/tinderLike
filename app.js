@@ -1,15 +1,15 @@
 var interval = null,
 	qtd = 0;
 
-function run(time = 300, KEYWORDS = false){
+function run(time = 300, KEYWORDS = false, distanceKm = 99999){
 	if(typeof interval !== null){
 		clearInterval(interval);
 	}
 	var sKEYWORDS = KEYWORDS
-	interval = setInterval(() => action(sKEYWORDS), time);
+	interval = setInterval(() => action(sKEYWORDS, distanceKm), time);
 }
 
-function action(KEYWORDS = false){
+function action(KEYWORDS = false, distanceKm = 99999){
 	qtd += 1;
 
 	let isDislike = false,
@@ -22,8 +22,9 @@ function action(KEYWORDS = false){
 	try {
 		cardActived = document.querySelector("div.recCard.needsclick.active");
 
-		filtered = filter(cardActived, KEYWORDS);
-		isDislike = (filtered.qtd > 0);
+		filtered     = filter(cardActived, KEYWORDS);
+		filteredByKm = filterByDistance(cardActived, distanceKm);
+		isDislike    = (filtered.qtd > 0 || filteredByKm.distance < 0);
 		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
 		btn = document.querySelector(selectorBtn);
 
@@ -74,6 +75,26 @@ function filter(cardActived, KEYWORDS){
 	}
 }
 
+function filterByDistance( cardActived, distance ){
+	try {
+		const click = cardActived.querySelector('div.recCard__openProfile').click();
+		let profileDetails = []
+		document.querySelectorAll('.profileCard__info').forEach(function (e) {
+			profileDetails.push(e.textContent)
+		}, this);
+
+		realDistance = profileDetails[profileDetails.length - 1].split(" ")[0]
+
+		return { "distance": distance - realDistance }
+	} catch (e) {
+		console.log(e);
+		return { "distance": 1 };
+	}
+}
+
+function openProfileCard( cardActived ){
+	return cardActived.querySelector('div.recCard__openProfile').click();
+}
 
 function stop(){
 	console.log('stopped!')
@@ -81,6 +102,4 @@ function stop(){
 }
 
 //time in milliseconds
-run(300, [
-	'acompanhante', 'trans'
-])
+run(1000, ['acompanhante', 'trans'], 3)
