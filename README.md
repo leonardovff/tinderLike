@@ -12,6 +12,7 @@ Automatic liker on tinder web
 
 * Like or dislike Automatically
 * Filter person's based on keywords in bio profile description
+* Filter person's based on max distance
 
 ## Usage
 
@@ -21,16 +22,20 @@ Run this application directly from your browser's console
 
 1. Open the browser's console
 2. <kbd>CTRL</kbd>+<kbd>C</kbd>  <kbd>CTRL</kbd>+<kbd>V</kbd> code in console
-3. With function run (time in milliseconds) and filter array
+3. With function run (time in milliseconds) and filter array and max distance in km
 
 ```js
-run(200, ['aquariana', 'batata'])
+run(200, ['aquariana', 'batata'], 3)
 ```
 
 ### Stop
 ```js
 stop();
 ```
+
+### Note about max distance
+
+Sometimes, if you are liked by a person, the distance may be greater than that you set in the app, the distance filter allows you to limit these matchs
 
 ## License
 
