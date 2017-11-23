@@ -1,12 +1,17 @@
 var interval = null,
-	qtd = 0;
+	qtd = 0,
+	sKEYWORDS
 
 function run(time = 300, KEYWORDS = false){
-	if(typeof interval !== null){
-		clearInterval(interval);
+	if(time < 300){
+		throw new Error("You shuld use time minor that 250")
+	} else {
+		if(typeof interval !== null){
+			clearInterval(interval);
+		}
+		sKEYWORDS = KEYWORDS
+		interval = setInterval(() => action(sKEYWORDS), time);
 	}
-	var sKEYWORDS = KEYWORDS
-	interval = setInterval(() => action(sKEYWORDS), time);
 }
 
 function action(KEYWORDS = false){
@@ -17,43 +22,40 @@ function action(KEYWORDS = false){
 		btn,
 		cardActived,
 		filtered = false,
-		msg = "["+ qtd + "] ";
+		msg = "["+ qtd + "]",
+		cardNameAgeSelector;
 
-	try {
-		cardActived = document.querySelector("div.recCard.needsclick.active");
+	cardActived = document.querySelector("div.recCard.StretchedBox.active");
 
-		if( cardActived === null){
-			console.log( "sem cards" );
-			stop()
-			return;
-		}
-
+	if(cardActived === null){
+		msg += "No cards"
+		stop()
+	} else {
 		filtered = filter(cardActived, KEYWORDS);
-		isDislike = (filtered.qtd > 0);
+		isDislike = (filtered && filtered.qtd > 0);
 		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
+
 		btn = document.querySelector(selectorBtn);
-
-		cardNameAge = cardActived.querySelector("div.recCard__nameAge").textContent.split(', ');
-		cardNameAge = {
-			"name": cardNameAge[0],
-			"age": cardNameAge[1]
-		}
-		msg += (isDislike? 'Dislike' : 'Like') + ' at ' + cardNameAge.name + " ("+ cardNameAge.age +"y).";
-		if(filtered){
-			if(filtered.details){
-				msg += "\n\t- "+filtered.details.join(' - ');
+		cardNameAgeSelector = cardActived.querySelector("div.recCard__nameAge")
+		if(btn && cardNameAgeSelector) {
+			cardNameAge = cardNameAgeSelector.textContent.split(', ');
+			cardNameAge = {
+				"name": cardNameAge[0],
+				"age": cardNameAge[1]
 			}
-			if(filtered.qtd > 0){
-				msg += "\n\t- "+filtered.qtd + " filtered words: " +"\n\t"+ filtered.words.join(', ');
+			msg += (isDislike? 'Dislike' : 'Like') + ' at ' + cardNameAge.name + " ("+ cardNameAge.age +"y).";
+			if(isDislike){
+				if(filtered.details){
+					msg += "\n\t- "+filtered.details.join(' - ');
+				}
+				if(filtered.qtd > 0){
+					msg += "\n\t- "+filtered.qtd + " filtered words: " +"\n\t"+ filtered.words.join(', ');
+				}
 			}
+			btn.click();
 		}
-		btn.click();
-	} catch (e) {
-		msg = e;
-	} finally {
-		console.log(msg);
 	}
-
+	console.log(msg);
 }
 
 function filter(cardActived, KEYWORDS){
@@ -83,9 +85,9 @@ function filter(cardActived, KEYWORDS){
 
 
 function stop(){
-	console.log('stopped!')
+	console.log('Stopped!')
 	clearInterval(interval);
 }
 
 //time in milliseconds
-run(1000, [ 'acompanhante', 'trans' ])
+run(300, [ 'acompanhante', 'trans' ])
