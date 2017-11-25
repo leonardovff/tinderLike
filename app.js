@@ -5,13 +5,12 @@ var interval = null,
 function run(time = 300, KEYWORDS = false){
 	if(time < 300){
 		throw new Error("You shuld use time minor that 250")
-	} else {
-		if(typeof interval !== null){
-			clearInterval(interval);
-		}
-		sKEYWORDS = KEYWORDS
-		interval = setInterval(() => action(sKEYWORDS), time);
 	}
+	if(typeof interval !== null){
+		clearInterval(interval);
+	}
+	sKEYWORDS = KEYWORDS
+	interval = setInterval(() => action(sKEYWORDS), time);
 }
 
 function action(KEYWORDS = false){
