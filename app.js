@@ -89,4 +89,4 @@ function stop(){
 }
 
 //time in milliseconds
-run(300, [ 'acompanhante', 'trans' ])
+run(300, [ 'acompanhante', 'casado' ])
