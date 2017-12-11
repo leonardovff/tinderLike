@@ -4,7 +4,7 @@ var interval = null,
 
 function run(time = 300, KEYWORDS = false){
 	if(time < 300){
-		throw new Error("You shuld use time minor that 250")
+		throw new Error("You shuldn't use time minor that 300.")
 	}
 	if(typeof interval !== null){
 		clearInterval(interval);
@@ -14,47 +14,47 @@ function run(time = 300, KEYWORDS = false){
 }
 
 function action(KEYWORDS = false){
-	qtd += 1;
-
 	let isDislike = false,
 		selectorBtn,
 		btn,
 		cardActived,
 		filtered = false,
-		msg = "["+ qtd + "]",
+		msg = "["+ qtd + "] ",
 		cardNameAgeSelector;
 
-	cardActived = document.querySelector("div.recCard.StretchedBox.active");
+	try {
+		cardActived = document.querySelector("div.recCard.StretchedBox.active")
+		filtered = filter(cardActived, KEYWORDS)
+		isDislike = (filtered && filtered.qtd > 0)
+		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like'
 
-	if(cardActived === null){
-		msg += "No cards"
-		stop()
-	} else {
-		filtered = filter(cardActived, KEYWORDS);
-		isDislike = (filtered && filtered.qtd > 0);
-		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like';
+		btn = document.querySelector(selectorBtn)
 
-		btn = document.querySelector(selectorBtn);
-		cardNameAgeSelector = cardActived.querySelector("div.recCard__nameAge")
-		if(btn && cardNameAgeSelector) {
-			cardNameAge = cardNameAgeSelector.textContent.split(', ');
-			cardNameAge = {
-				"name": cardNameAge[0],
-				"age": cardNameAge[1]
-			}
-			msg += (isDislike? 'Dislike' : 'Like') + ' at ' + cardNameAge.name + " ("+ cardNameAge.age +"y).";
-			if(isDislike){
-				if(filtered.details){
-					msg += "\n\t- "+filtered.details.join(' - ');
-				}
-				if(filtered.qtd > 0){
-					msg += "\n\t- "+filtered.qtd + " filtered words: " +"\n\t"+ filtered.words.join(', ');
-				}
-			}
-			btn.click();
+		cardNameAgeSelector = cardActived.querySelector("div.recCard__info > div")
+		cardNameAge = cardNameAgeSelector.textContent.split(', ');
+		cardNameAge = {
+			"name": cardNameAge[0],
+			"age": cardNameAge[1]
 		}
+
+		msg += (isDislike? 'Dislike' : 'Like') + ' at ' + cardNameAge.name + " ("+ cardNameAge.age +"y).";
+		if(isDislike){
+			if(filtered.details){
+				msg += "\n\t- "+filtered.details.join(' - ');
+			}
+			if(filtered.qtd > 0){
+				msg += "\n\t- "+filtered.qtd + " filtered words: " +"\n\t"+ filtered.words.join(', ');
+			}
+		}
+		qtd++
+		btn.click()
+	} catch (error) {
+		msg += "No cards"
+		// msg += "\n" + error
+		stop()
+	} finally {
+		console.log(msg);
 	}
-	console.log(msg);
 }
 
 function filter(cardActived, KEYWORDS){
@@ -89,4 +89,4 @@ function stop(){
 }
 
 //time in milliseconds
-run(300, [ 'acompanhante', 'casado' ])
+run(300, [ 'acompanhante', 'casado', 'trans' ])
