@@ -1,6 +1,7 @@
 var interval = null,
 qtd = 0,
-sKEYWORDS
+sKEYWORDS,
+sTIME
 
 function run(time = 500, KEYWORDS = false){
 	if(time < 500){
@@ -9,6 +10,7 @@ function run(time = 500, KEYWORDS = false){
 	if(typeof interval !== null){
 		clearInterval(interval);
 	}
+	sTIME = time
 	sKEYWORDS = KEYWORDS
 	interval = setInterval(() => action(sKEYWORDS), time);
 }
@@ -51,7 +53,7 @@ function action(KEYWORDS = false){
 	} catch (error) {
 		msg += "No cards"
 		// msg += "\n" + error
-		stop()
+		stop(true)
 	} finally {
 		console.log(msg);
 	}
@@ -76,16 +78,23 @@ function filter(cardActived, KEYWORDS){
 			"details": profileDetails
 		}
 	} catch (e) {
-		console.log(e);
+		//console.log(e);
 		return false;
 	}
 }
 
 
 
-function stop(){
+function stop(restart = false){
 	console.log('Stopped!')
 	clearInterval(interval);
+	if (restart) {
+		console.log('Restarting...')
+		setTimeout(() => {
+			interval = setInterval(() => action(sKEYWORDS), sTIME);
+		}, sTIME+qtd)
+
+	}
 }
 
 //time in milliseconds
