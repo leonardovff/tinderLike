@@ -2,8 +2,8 @@ var interval = null,
 qtd = 0,
 sKEYWORDS
 
-function run(time = 300, KEYWORDS = false){
-	if(time < 300){
+function run(time = 500, KEYWORDS = false){
+	if(time < 500){
 		throw new Error("You shuldn't use time minor that 300.")
 	}
 	if(typeof interval !== null){
@@ -89,4 +89,4 @@ function stop(){
 }
 
 //time in milliseconds
-run(300, [ 'acompanhante', 'casado', 'trans' ])
+run(500, [ 'acompanhante', 'casado', 'trans' ])
