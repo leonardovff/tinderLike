@@ -1,6 +1,6 @@
 var interval = null,
-	qtd = 0,
-	sKEYWORDS
+qtd = 0,
+sKEYWORDS
 
 function run(time = 300, KEYWORDS = false){
 	if(time < 300){
@@ -15,16 +15,16 @@ function run(time = 300, KEYWORDS = false){
 
 function action(KEYWORDS = false){
 	let isDislike = false,
-		selectorBtn,
-		btn,
-		cardActived,
-		filtered = false,
-		msg = "["+ qtd + "] ",
-		cardNameAgeSelector;
+	selectorBtn,
+	btn,
+	cardActived,
+	filtered = false,
+	msg = "["+ qtd + "] ",
+	cardNameAgeSelector;
 
 	try {
 		cardActived = document.querySelector("div.recCard.StretchedBox.active")
-		filtered = filter(cardActived, KEYWORDS)
+		filtered = KEYWORDS ? filter(cardActived, KEYWORDS) : false
 		isDislike = (filtered && filtered.qtd > 0)
 		selectorBtn = isDislike ? 'button.recsGamepad__button--dislike' : 'button.recsGamepad__button--like'
 
