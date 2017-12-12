@@ -25,6 +25,9 @@ function action(KEYWORDS = false){
 	cardNameAgeSelector;
 
 	try {
+		if (document.querySelector(".itsAMatch.CenterAlign.Expand")) {
+			document.querySelector("button.button.button--close").click()
+		}
 		cardActived = document.querySelector("div.recCard.StretchedBox.active")
 		filtered = KEYWORDS ? filter(cardActived, KEYWORDS) : false
 		isDislike = (filtered && filtered.qtd > 0)
