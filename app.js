@@ -1,7 +1,7 @@
 var interval = null,
 qtd = 0,
 sKEYWORDS,
-sTIME
+sTIME;
 
 function run(time = 500, KEYWORDS = false){
 	if(time < 500){
@@ -101,4 +101,4 @@ function stop(restart = false){
 }
 
 //time in milliseconds
-run(500, [ 'acompanhante', 'casado', 'trans' ])
+run(500, [ 'acompanhante', 'casado'])
