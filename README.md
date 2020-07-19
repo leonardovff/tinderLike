@@ -6,8 +6,6 @@
 
 Automatic liker on tinder web
 
-![peek 2017-10-06 06-19](https://user-images.githubusercontent.com/1028425/31271681-c1ca4898-aa5e-11e7-9704-df053707c306.gif)
-
 ## Features
 
 * Like or dislike Automatically
